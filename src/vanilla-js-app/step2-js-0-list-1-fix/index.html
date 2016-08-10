@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TODO List</title>
+    <link rel="stylesheet" type="text/css" href="../../styles/index.css">
+    <link rel="stylesheet" type="text/css" href="../../styles/filters.css">
+    <link rel="stylesheet" type="text/css" href="../../styles/list.css">
+    <link rel="stylesheet" type="text/css" href="../../styles/task.css">
+    <link rel="stylesheet" type="text/css" href="../../styles/statistic.css">
+    <script src="app.js"></script>
+</head>
+<body>
+<h1 class="head">TODO List</h1>
+<div class="container">
+    <label>
+        <div class="add-task">
+            <input class="add-task__input" placeholder="Имя задачи" autofocus>
+        </div>
+    </label>
+    <div class="filters">
+        <div class="filters__item filters__item_all filter__item_selected">все</div>
+        <div class="filters__item filters__item_done">завершенные</div>
+        <div class="filters__item filters__item_left">незавершенные</div>
+    </div>
+    <div class="list">
+       <!--Сформируем список задач динамически-->
+    </div>
+    <div class="statistic">
+        Всего:
+        <div class="statistic__total">10</div>
+        Завершено:
+        <div class="statistic__done">5</div>
+        Осталось:
+        <div class="statistic__left">5</div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+body div, h2{
+    margin:10px;
+}
+
+.new-spending-container{
+    border:1px solid grey;
+    width:50%;
+    border-radius: 5px;
+    background-color: #f5e79e;
+    padding: 10px;
+}
+
+.add-spending__button {
+    background-color: lightgreen;
+    padding: 5px;
+}
+
+.unfold-history{
+    float: right;
+    cursor: pointer;
+}
+
+.spending-category-block div{
+    display: inline-block;
+}
+
+.spendings-list{
+    width: 50%;
+    display: inline-block;
+}
+
+.spendings-graph-container{
+    float:right;
+    width:350px;
+    padding-top:20px;
+
+}
+
+.spending-item{
+    padding:2px;
+    background-color: lightgreen;
+    border-radius: 2px;
+}

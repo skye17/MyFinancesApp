@@ -1,0 +1,27 @@
+.filters {
+    margin-top: 40px;
+    text-align: center;
+
+}
+
+.filters__item {
+    display: inline-block;
+    margin-right: 10px;
+    border: 1px solid;
+    padding: 5px;
+
+    color: slategray;
+
+    border-color: #f5f5f5;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.filter__item_selected {
+    border-color: inherit;
+}
+
+.filters__item:hover{
+    background-color: lightyellow;
+}

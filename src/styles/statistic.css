@@ -1,0 +1,23 @@
+.statistic {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.statistic__total {
+    display: inline-block;
+    font-style: normal;
+}
+
+.statistic__done {
+    display: inline-block;
+    color: lightgreen;
+    font-style: normal;
+}
+
+.statistic__left {
+    display: inline-block;
+    color: lightcoral;
+    font-style: normal;
+}

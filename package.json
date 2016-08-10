@@ -1,0 +1,20 @@
+{
+  "name": "vanilla-js-app-vs-angular-app",
+  "version": "1.0.0",
+  "description": "Сравнение AngularJS и VanillaJS решений на примере простого приложения 'TODO List'",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexanderAlexeev/vanilla-js-app-VS-angular-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexanderAlexeev/vanilla-js-app-VS-angular-app/issues"
+  },
+  "homepage": "https://github.com/AlexanderAlexeev/vanilla-js-app-VS-angular-app#readme",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "bootstrap": "^3.3.0",
+    "chart.js": "~2.2.1"
+  }
+}
