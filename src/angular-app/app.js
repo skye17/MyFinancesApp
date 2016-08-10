@@ -51,11 +51,10 @@ function init($scope) {
 
     if (localStorage.spendings) {
         $scope.spendings = JSON.parse(localStorage.spendings);
+        console.log($scope.spendings);
     } else {
-        $scope.spendings = [{name:"Ужин с друзьями", category:$scope.categories[0], source:$scope.sources[1],cost:1000, date:Date.now()}];
-    };
-
-
+        $scope.spendings = [];
+    }
 }
 
 
@@ -68,28 +67,44 @@ function init($scope) {
 
         $scope.spending = {};
         $scope.newSpending = false;
-        $scope.selectedSourceFilter = {};
         $scope.sourceFilters = [{name:'Все источники'}, {name:'Все дебетовые карты', type:sourceTypes[0]},
             {name:'Все кредитные карты', type:sourceTypes[1]}, {name:'Наличные', type:sourceTypes[2]},
             {name:'Все счета', type:sourceTypes[3]}
         ];
+        $scope.selectedSourceFilter = $scope.sourceFilters[0];
+
+        $scope.selectedPeriodStartDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+        $scope.selectedPeriodEndDate = new Date();
+
+        $scope.selectedSpendings = getFilteredSpendings();
+        $scope.spendingsByCategory =getSpendingsByCategories($scope.categories, $scope.selectedSpendings);
+
+        $scope.sumSpendings = calculateSumOfSpendings($scope.selectedSpendings);
 
 
-        $scope.getFilteredSpendingsBySources = function(){
+        function getFilteredSpendings(){
+            /*console.log("inside getFilteredSpendings");
+            console.log($scope.spendings);
+            var result;
+            console.log($scope.selectedPeriodStartDate);
+            console.log($scope.selectedPeriodEndDate);
+            console.log("spendings dates");*/
+            $scope.spendings.forEach(spending => console.log(spending.date));
             if (!$scope.selectedSourceFilter.type) {
-                return $scope.spendings;
+                result = $scope.spendings.filter(spending => (spending.date >= $scope.selectedPeriodStartDate) &&
+                    (spending.date <= $scope.selectedPeriodEndDate));
+            } else {
+                result = $scope.spendings.filter(spending => (spending.source.type === $scope.selectedSourceFilter.type) &&
+                    (spending.date >= $scope.selectedPeriodStartDate) &&
+                    (spending.date <= $scope.selectedPeriodEndDate));
             }
-            return $scope.spendings.filter(spending => spending.source.type === $scope.selectedSourceFilter.type);
+            console.log(result);
+            return result;
 
-        };
-
-        $scope.selectedSpendings = $scope.getFilteredSpendingsBySources();
-
-        $scope.spendingsByCategory = getSpendingsByCategories($scope.categories, $scope.selectedSpendings);
-
-
+        }
 
         function getSpendingsByCategories(categories, spendings) {
+
             var spendingsByCategory =  categories.map(function(category) {
                 return {category:category, spendings: spendings.filter(spending => spending.category.name === category.name)};
             });
@@ -172,8 +187,8 @@ function init($scope) {
         };
         */
 
-        $scope.showSpendingForm = function () {
-            $scope.newSpending = true;
+        $scope.toggleSpendingForm = function () {
+            $scope.newSpending = !$scope.newSpending;
         };
 
         $scope.toggleSelectedSpendingCategory = function (category) {
@@ -185,11 +200,6 @@ function init($scope) {
 
         };
 
-
-
-        $scope.sumSpendings = function() {
-            return calculateSumOfSpendings($scope.selectedSpendings);
-        };
 
 
 
@@ -204,16 +214,22 @@ function init($scope) {
 
 
         $scope.$watch('spendings', update, true);
-        $scope.$watch('selectedSourceFilter', updateSpendings, true);
+        $scope.$watchGroup(['selectedSourceFilter', 'selectedPeriodStartDate', 'selectedPeriodEndDate'], updateSpendings, true);
+
 
         function update() {
             dumpData();
+            $scope.selectedSpendings = getFilteredSpendings();
+            $scope.spendingsByCategory = getSpendingsByCategories($scope.categories, $scope.selectedSpendings);
+            $scope.sumSpendings = calculateSumOfSpendings($scope.selectedSpendings);
             $scope.buildPieChart();
         };
 
         function updateSpendings() {
-            $scope.selectedSpendings = $scope.getFilteredSpendingsBySources();
+            console.log('updating spendings');
+            $scope.selectedSpendings = getFilteredSpendings();
             $scope.spendingsByCategory = getSpendingsByCategories($scope.categories, $scope.selectedSpendings);
+            $scope.sumSpendings = calculateSumOfSpendings($scope.selectedSpendings);
             $scope.buildPieChart();
 
         };

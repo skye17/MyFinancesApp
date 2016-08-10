@@ -2,19 +2,24 @@
 
 
 <div ng-controller="SpendingsController">
+    <div class="date-filters">
+        <input type="date" ng-model="selectedPeriodStartDate" max="{{selectedPeriodEndDate}}">
+        <input type="date" ng-model="selectedPeriodEndDate">
+    </div>
 
     <div class="source-filters">
         <select ng-options="filter.name for filter in sourceFilters" ng-model="selectedSourceFilter"></select>
     </div>
 
     <div class="spendings-list">
-        <h3>Всего расходов: {{ sumSpendings() }} руб.</h3>
+        <h4>Период: {{selectedPeriodStartDate | date}} - {{selectedPeriodEndDate | date}}</h4>
+        <h4>Всего расходов за период: {{ sumSpendings }} руб.</h4>
         <div class="spending-item" ng-repeat="spending in spendingsByCategory" ng-show="spending.spendings.length">
                 <div class="category-container">
                     <div class="spending-category-block">
                         <div><b>{{spending.category.name}}</b></div>
                         <div class="unfold-history" ng-click="toggleSelectedSpendingCategory(spending.category)">
-                            {{ spending.sumCost*100/sumSpendings() | number:0}}% :{{spending.sumCost}} руб.
+                            {{ spending.sumCost*100/sumSpendings | number:0}}% :{{spending.sumCost}} руб.
                         </div>
                     </div>
 
@@ -31,10 +36,10 @@
     </div>
 
 
-    <div><button class="add-spending__button" ng-click="showSpendingForm()">Добавить новый расход</button></div>
+    <div><button class="add-spending__button" ng-click="toggleSpendingForm()">Добавить новый расход</button></div>
 
     <div class="new-spending-container" ng-show="newSpending === true">
-        <form name="newSpendingForm" role="form" ng-submit="addSpending()" novalidate>
+        <form name="newSpendingForm" role="form" ng-submit="addSpending()">
             <!--  Spending Form -->
             <h4>Добавьте новый расход:</h4>
             <fieldset class="form-group" >
@@ -42,7 +47,7 @@
                 <input ng-model="spending.name" class="form-control" id="name" title="Название" required/>
             </fieldset>
 
-            <fieldset>
+            <fieldset class="form-group">
                 <label for="category">Категория</label>
                 <select ng-model="spending.category" class="form-control"  id="category"
                         ng-options="category.name for category in categories" title="Категория" required>
@@ -62,7 +67,7 @@
                 <input type="number" ng-model="spending.cost" class="form-control" id="cost" title="Стоимость" required/>
             </fieldset>
 
-            <fieldset>
+            <fieldset class="form-group">
                 <label for="source">Источник</label>
                 <select ng-model="spending.source" class="form-control" id="source"
                         ng-options="(source.type + ' ' + source.number) for source in sources track by source.id" title="Источник" required>
@@ -74,7 +79,8 @@
                 <input type="date" ng-model="spending.date" class="form-control" id="date" title="Дата совершения" required/>
             </fieldset>
 
-            <fieldset class="form-group">
+            <fieldset>
+                <button class="btn btn-primary pull-left" ng-click="toggleSpendingForm()">Отмена</button>
                 <input type="submit" class="btn btn-primary pull-right" value="Добавить расход" />
             </fieldset>
         </form>
