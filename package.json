@@ -1,17 +1,17 @@
 {
-  "name": "vanilla-js-app-vs-angular-app",
+  "name": "my-finances-angular-app",
   "version": "1.0.0",
-  "description": "Сравнение AngularJS и VanillaJS решений на примере простого приложения 'TODO List'",
+  "description": "",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AlexanderAlexeev/vanilla-js-app-VS-angular-app.git"
+    "url": "git+https://github.com/skye17/MyFinancesApp.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AlexanderAlexeev/vanilla-js-app-VS-angular-app/issues"
+    "url": "https://github.com/skye17/MyFinancesApp/issues"
   },
-  "homepage": "https://github.com/AlexanderAlexeev/vanilla-js-app-VS-angular-app#readme",
+  "homepage": "https://github.com/skye17/MyFinancesApp#readme",
   "dependencies": {
     "angular": "^1.5.8",
     "bootstrap": "^3.3.0",
