@@ -1,3 +1,61 @@
-<div>
-    <h2>Balance goes here!</h2>
+<div ng-controller="BalanceController">
+
+
+
+    <div class="items-list">
+        <div>Всего доступно: {{ sumBalance }} руб.</div>
+        <div ng-repeat="source in sourcesByType " ng-show="source.sources.length">
+            <div class="item-container">
+                <div class="item-block">
+                    <div><b>{{source.type}}</b></div>
+                    <div class="unfold-history" ng-click="toggleSelectedType(source.type)">
+                        {{ source.sumBalance*100/sumBalance | number:0}}% :{{source.sumBalance}}руб.
+                    </div>
+                </div>
+
+            </div>
+            <div ng-repeat="sourceItem in source.sources" ng-show="selectedType === source.type">
+                <p>{{sourceItem.type}}  {{sourceItem.number}} :  {{ sourceItem.balance }} руб.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="sources-graph-container">
+        <canvas id="sourcesChart"></canvas>
+    </div>
+
+    <div class="add-button-container">
+        <button class="add-button" ng-click="toggleTransferForm()">Перевод между источниками</button>
+    </div>
+
+    <div class="new-item-container" ng-show="newTransfer === true">
+        <form name="newTransferForm" role="form" ng-submit="makeTransfer()">
+            <!--  Transfer Form -->
+            <h4>Совершить новый перевод:</h4>
+
+            <fieldset class="form-group">
+                <label for="src">Источник списания</label>
+                <select ng-model="transfer.source" class="form-control" id="src"
+                        ng-options="(source.type + ' ' + source.number) for source in sources track by source.id" title="Источник" required>
+                </select>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label for="dest">Источник получения</label>
+                <select ng-model="transfer.destination" class="form-control" id="dest"
+                        ng-options="(source.type + ' ' + source.number) for source in sources track by source.id" title="Источник" required>
+                </select>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label for="amount">Сумма</label>
+                <input type="number" ng-model="transfer.amount" class="form-control" id="amount" title="Сумма" required/>
+            </fieldset>
+
+            <fieldset>
+                <button class="btn btn-primary pull-left" ng-click="toggleTransferForm()">Отмена</button>
+                <input type="submit" class="btn btn-primary pull-right" value="Подтвердить перевод" />
+            </fieldset>
+        </form>
+    </div>
 </div>

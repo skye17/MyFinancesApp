@@ -1,44 +1,45 @@
-
-
-
 <div ng-controller="SpendingsController">
-    <div class="date-filters">
-        <input type="date" ng-model="selectedPeriodStartDate" max="{{selectedPeriodEndDate}}">
-        <input type="date" ng-model="selectedPeriodEndDate">
-    </div>
 
-    <div class="source-filters">
-        <select ng-options="filter.name for filter in sourceFilters" ng-model="selectedSourceFilter"></select>
-    </div>
+    <div class="filters">
+        <div class="date-filters">
+            <input type="date" ng-model="selectedStartDate">
+            <input type="date" ng-model="selectedEndDate">
+        </div>
 
-    <div class="spendings-list">
-        <h4>Период: {{selectedPeriodStartDate | date}} - {{selectedPeriodEndDate | date}}</h4>
-        <h4>Всего расходов за период: {{ sumSpendings }} руб.</h4>
-        <div class="spending-item" ng-repeat="spending in spendingsByCategory" ng-show="spending.spendings.length">
-                <div class="category-container">
-                    <div class="spending-category-block">
-                        <div><b>{{spending.category.name}}</b></div>
-                        <div class="unfold-history" ng-click="toggleSelectedSpendingCategory(spending.category)">
-                            {{ spending.sumCost*100/sumSpendings | number:0}}% :{{spending.sumCost}} руб.
-                        </div>
-                    </div>
-
-                </div>
-                <div ng-repeat="spendingItem in spending.spendings" ng-show="selectedSpendingCategory === spending.category">
-                    <p><b>{{ spendingItem.name }}</b> - {{ spendingItem.cost }} руб.</p>
-                    <p>{{ spendingItem.source.type }}  {{spendingItem.source.name }} {{spendingItem.source.number }}</p>
-                </div>
+        <div class="source-filters">
+            <select ng-options="filter.name for filter in sourceFilters" ng-model="selectedSourceFilter"></select>
         </div>
     </div>
 
-    <div class="spendings-graph-container">
-        <canvas id="myChart"></canvas>
+    <div class="add-button-container">
+        <button class="add-button" ng-click="toggleSpendingForm()">Добавить новый расход</button>
     </div>
 
+    <div class="items-list">
+        <div>Всего за период: {{ sumSpendings }} руб.</div>
+        <div ng-repeat=" item in filteredByCategory" >
+            <div class="item-container">
+                <div class="item-block">
+                    <div><b>{{item.category.name}}</b></div>
+                    <div class="unfold-history" ng-click="toggleSelectedCategory(item.category)">
+                        {{ item.sumCost*100/sumSpendings | number:0}}% :{{item.sumCost}} руб.
+                    </div>
+                </div>
 
-    <div><button class="add-spending__button" ng-click="toggleSpendingForm()">Добавить новый расход</button></div>
+            </div>
+            <div ng-repeat="spendingItem in item.spendings" ng-show="selectedCategory === item.category">
+                <p><b>{{ spendingItem.name }}</b> - {{ spendingItem.cost }} руб,   {{ spendingItem.date | date }}</p>
+                <p>{{ spendingItem.source.type }}  {{spendingItem.source.name }} {{spendingItem.source.number }}</p>
+            </div>
+        </div>
 
-    <div class="new-spending-container" ng-show="newSpending === true">
+    </div>
+
+    <div class="spendings-graph-container">
+        <canvas id="spendingsChart"></canvas>
+    </div>
+
+    <div class="new-item-container" ng-show="newSpending === true">
         <form name="newSpendingForm" role="form" ng-submit="addSpending()">
             <!--  Spending Form -->
             <h4>Добавьте новый расход:</h4>
@@ -53,14 +54,6 @@
                         ng-options="category.name for category in categories" title="Категория" required>
                 </select>
             </fieldset>
-
-           <!-- <fieldset>
-                <label for="subcategory">Подкатегория</label>
-                <select ng-model="spending.category" class="form-control"  id="subcategory"
-                        ng-options="subcategory.name for subcategory in getSubCategories(selectedCategory)" title="Подкатегория">
-                    <option value="">Выберите существующую подкатегорию или добавьте новую:</option>
-                </select>
-            </fieldset>-->
 
             <fieldset class="form-group">
                 <label for="cost">Стоимость</label>

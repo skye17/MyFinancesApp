@@ -1,20 +1,20 @@
 <section>
     <!--  Tab Navigation  -->
-    <ul class="nav nav-pills">
-        <li ng-class="{ active:tab.isSet(0) }">
-            <a href="" ng-click="tab.setTab(0)">Расходы</a>
-        </li>
-        <li ng-class="{ active:tab.isSet(1) }">
-            <a href="" ng-click="tab.setTab(1)">Доступные средства</a>
-        </li>
-        <li ng-class="{ active:tab.isSet(2) }">
-            <a href="" ng-click="tab.setTab(2)">Календарь</a>
-        </li>
-    </ul>
-    <!--  Description Tab's Content  -->
-    <spendings ng-show="tab.isSet(0)"></spendings>
-    <!--  Spec Tab's Content  -->
-    <balance ng-show="tab.isSet(1)"></balance>
-    <!--  Review Tab's Content  -->
-    <calendar ng-show="tab.isSet(2)"></calendar>
+    <div class="nav-buttons">
+        <div ng-class="{ active:tab.isSet(0) }" ng-click="tab.setTab(0)">
+            Расходы
+        </div>
+        <div ng-class="{ active:tab.isSet(1) }" ng-click="tab.setTab(1)">
+            Доступные средства
+        </div>
+        <div ng-class="{ active:tab.isSet(2) }" ng-click="tab.setTab(2)">
+            Календарь
+        </div>
+    </div>
+
+    <spendings ng-if="tab.isSet(0)"></spendings>
+
+    <balance ng-if="tab.isSet(1)"></balance>
+
+    <calendar ng-if="tab.isSet(2)"></calendar>
 </section>
